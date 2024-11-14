@@ -15,6 +15,7 @@ export default function DisplayUserInput(): JSX.Element {
         <h1 className='text-4xl'>Write anything here</h1>
         <input
           type='text'
+          value={typedText}
           className='border p-2 border-black rounded-md'
           placeholder='enter anything'
           onChange={handleChange}
