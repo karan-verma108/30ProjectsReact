@@ -3,7 +3,8 @@
 // import DisplayUserInput from './components/DisplayUserInput';
 // import ListOfItems from './components/ListOfItems';
 // import ToggleSwitch from './components/ToggleSwitch';
-import DisplayAPIData from './components/DisplayAPIData';
+// import DisplayAPIData from './components/DisplayAPIData';
+import SpecifiedTimeCounter from './components/SpecifiedTimeCounter';
 
 function App() {
   return (
@@ -13,7 +14,8 @@ function App() {
       {/* <DisplayUserInput /> */}
       {/* <ListOfItems /> */}
       {/* <ToggleSwitch /> */}
-      <DisplayAPIData />
+      {/* <DisplayAPIData /> */}
+      <SpecifiedTimeCounter />
     </>
   );
 }
