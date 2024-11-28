@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 export default function SpecifiedTimeCounter(): JSX.Element {
   const [time, setTime]: [
@@ -10,57 +10,43 @@ export default function SpecifiedTimeCounter(): JSX.Element {
     number,
     React.Dispatch<React.SetStateAction<number>>
   ] = useState<number>(0);
+
   const [myMinutes, setMyMinutes]: [
     number,
     React.Dispatch<React.SetStateAction<number>>
   ] = useState<number>(0);
+
   const [mySeconds, setMySeconds]: [
     number,
     React.Dispatch<React.SetStateAction<number>>
   ] = useState<number>(0);
 
-  const [isTimeSet, setIsTimeSet]: [
-    boolean,
-    React.Dispatch<React.SetStateAction<boolean>>
-  ] = useState<boolean>(false);
+  // const [isTimeSet, setIsTimeSet]: [
+  //   boolean,
+  //   React.Dispatch<React.SetStateAction<boolean>>
+  // ] = useState<boolean>(false);
 
-  const handleTimeFormat = () => {
-    console.log('my hours', myHours);
-    console.log('my minutes', myMinutes);
-    console.log('my seconds', mySeconds);
-    if (myHours && myMinutes && mySeconds) {
-      const timeString = new Date();
-
-      setMyHours(timeString.setHours(myHours));
-      setMyMinutes(timeString.setMinutes(myMinutes));
-      setMySeconds(timeString.setSeconds(mySeconds));
-      setIsTimeSet(true);
-    }
-
-    // const timeString = new Date();
-    // const hours = timeString.setHours(myHours);
-    // const minutes = timeString.setMinutes(myMinutes);
-    // const seconds = timeString.setSeconds(mySeconds);
-    setTime(`${myHours}:${myMinutes}:${mySeconds}`);
-  };
-
-  if (isTimeSet) {
-    setInterval(() => {
-      handleTimeFormat();
-    }, 1000);
-  }
-
-  const handleSubmit = (e: any) => {
+  const handleSubmit = (e: React.FormEventHandler<HTMLFormElement>) => {
     e.preventDefault();
-    // if (myHours && myMinutes && mySeconds) {
-    //   const timeString = new Date();
-
-    //   setMyHours(timeString.setHours(myHours));
-    //   setMyMinutes(timeString.setMinutes(myMinutes));
-    //   setMySeconds(timeString.setSeconds(mySeconds));
-    //   setIsTimeSet(true);
-    // }
+    const date: Date = new Date();
+    date.setHours(myHours);
+    date.setMinutes(myMinutes);
+    date.setSeconds(mySeconds);
+    setMyHours(0);
+    setMyMinutes(0);
+    setMySeconds(0);
+    setTime(date.toLocaleTimeString());
+    printContinuesTime(date);
   };
+  console.log('time', time);
+
+  const printContinuesTime = (date: Date) => {
+    setInterval(() => {
+      date.setSeconds(date.getSeconds() + 1);
+      setTime(date.toLocaleTimeString());
+    }, 1000);
+  };
+
   return (
     <div className='flex flex-col h-screen justify-center items-center'>
       <h1>Welcome to your personalised counter</h1>
