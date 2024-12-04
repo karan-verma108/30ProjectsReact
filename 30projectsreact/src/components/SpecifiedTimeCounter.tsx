@@ -21,12 +21,7 @@ export default function SpecifiedTimeCounter(): JSX.Element {
     React.Dispatch<React.SetStateAction<number>>
   ] = useState<number>(0);
 
-  // const [isTimeSet, setIsTimeSet]: [
-  //   boolean,
-  //   React.Dispatch<React.SetStateAction<boolean>>
-  // ] = useState<boolean>(false);
-
-  const handleSubmit = (e: React.FormEventHandler<HTMLFormElement>) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const date: Date = new Date();
     date.setHours(myHours);
@@ -35,16 +30,19 @@ export default function SpecifiedTimeCounter(): JSX.Element {
     setMyHours(0);
     setMyMinutes(0);
     setMySeconds(0);
-    setTime(date.toLocaleTimeString());
+    if (myHours > 0 && myMinutes > 0) {
+      setTime(date.toLocaleTimeString());
+    }
     printContinuesTime(date);
   };
-  console.log('time', time);
 
   const printContinuesTime = (date: Date) => {
-    setInterval(() => {
-      date.setSeconds(date.getSeconds() + 1);
-      setTime(date.toLocaleTimeString());
-    }, 1000);
+    if (myHours > 0 && myMinutes > 0) {
+      setInterval(() => {
+        date.setSeconds(date.getSeconds() + 1);
+        setTime(date.toLocaleTimeString());
+      }, 1000);
+    }
   };
 
   return (
