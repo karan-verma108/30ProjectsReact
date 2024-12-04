@@ -4,7 +4,9 @@
 // import ListOfItems from './components/ListOfItems';
 // import ToggleSwitch from './components/ToggleSwitch';
 // import DisplayAPIData from './components/DisplayAPIData';
-import SpecifiedTimeCounter from './components/SpecifiedTimeCounter';
+// import SpecifiedTimeCounter from './components/basicComponents/SpecifiedTimeCounter';
+
+import Todo from './components/todo';
 
 function App() {
   return (
@@ -15,7 +17,8 @@ function App() {
       {/* <ListOfItems /> */}
       {/* <ToggleSwitch /> */}
       {/* <DisplayAPIData /> */}
-      <SpecifiedTimeCounter />
+      {/* <SpecifiedTimeCounter /> */}
+      <Todo />
     </>
   );
 }
