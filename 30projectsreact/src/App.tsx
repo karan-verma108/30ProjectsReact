@@ -5,8 +5,8 @@
 // import ToggleSwitch from './components/ToggleSwitch';
 // import DisplayAPIData from './components/DisplayAPIData';
 // import SpecifiedTimeCounter from './components/basicComponents/SpecifiedTimeCounter';
-
-import Todo from './components/todo';
+// import Todo from './components/todo';
+import DynamicBackground from './components/basicComponents/DynamicBackground';
 
 function App() {
   return (
@@ -18,7 +18,8 @@ function App() {
       {/* <ToggleSwitch /> */}
       {/* <DisplayAPIData /> */}
       {/* <SpecifiedTimeCounter /> */}
-      <Todo />
+      {/* <Todo /> */}
+      <DynamicBackground />
     </>
   );
 }
