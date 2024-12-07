@@ -22,17 +22,27 @@ export default function Todo(): JSX.Element {
     setUserInput('');
   };
 
-  const handleRemoveItem = (removeItem: string) => {
+  const handleRemoveItem = (removeItemId: number) => {
     const myTodo: string[] = [...todoList];
-    const indexOfRemoveItem: number = myTodo.indexOf(removeItem);
-    setTodoList(() => {
-      if (myTodo.includes(removeItem)) {
-        return myTodo.splice(indexOfRemoveItem, 1);
-      } else {
-        return myTodo;
-      }
-    });
+
+    //remove item using the item iteself
+    // const indexOfRemoveItem: number = myTodo.indexOf(removeItem);
+    // setTodoList(() => {
+    //   if (myTodo.includes(removeItem)) {
+    //     return myTodo.splice(indexOfRemoveItem, 1);
+    //   } else {
+    //     return myTodo;
+    //   }
+    // });
+
+    //remove item using the index
+    const filteredTodo = myTodo.filter(
+      (_: string, id: number) => id !== removeItemId
+    );
+    setTodoList(filteredTodo);
   };
+
+  console.log('todos arr', todoList);
 
   return (
     <div className='w-full h-screen bg-yellow-200 flex flex-col gap-7 justify-center items-center'>
@@ -58,11 +68,12 @@ export default function Todo(): JSX.Element {
           </button>
         </form>
         {todoList.length > 0 &&
-          todoList.map((todoItem: string) => (
+          todoList.map((todoItem: string, index: number) => (
             <TodoItem
               key={todoItem}
               item={todoItem}
-              onClick={() => handleRemoveItem(todoItem)}
+              index={index}
+              onClick={() => handleRemoveItem(index)}
             />
           ))}
       </div>
