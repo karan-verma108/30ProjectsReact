@@ -5,7 +5,9 @@
 // import ToggleSwitch from './components/ToggleSwitch';
 // import DisplayAPIData from './components/DisplayAPIData';
 // import SpecifiedTimeCounter from './components/basicComponents/SpecifiedTimeCounter';
-import Todo from './components/todo';
+// import Todo from './components/todo';
+// import Navbar from './components/basicComponents/Navbar';
+import Routing from './routing';
 // import DynamicBackground from './components/basicComponents/DynamicBackground';
 
 function App() {
@@ -18,8 +20,10 @@ function App() {
       {/* <ToggleSwitch /> */}
       {/* <DisplayAPIData /> */}
       {/* <SpecifiedTimeCounter /> */}
-      <Todo />
+      {/* <Todo /> */}
       {/* <DynamicBackground /> */}
+      {/* <Navbar /> */}
+      <Routing />
     </>
   );
 }
