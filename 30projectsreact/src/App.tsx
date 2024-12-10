@@ -7,8 +7,9 @@
 // import SpecifiedTimeCounter from './components/basicComponents/SpecifiedTimeCounter';
 // import Todo from './components/todo';
 // import Navbar from './components/basicComponents/Navbar';
-import Routing from './routing';
+// import Routing from './routing';
 // import DynamicBackground from './components/basicComponents/DynamicBackground';
+import RandomQuotes from './components/basicComponents/RandomQuotes';
 
 function App() {
   return (
@@ -23,7 +24,8 @@ function App() {
       {/* <Todo /> */}
       {/* <DynamicBackground /> */}
       {/* <Navbar /> */}
-      <Routing />
+      {/* <Routing /> */}
+      <RandomQuotes />
     </>
   );
 }
