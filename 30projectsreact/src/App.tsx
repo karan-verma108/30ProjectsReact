@@ -9,7 +9,8 @@
 // import Navbar from './components/basicComponents/Navbar';
 // import Routing from './routing';
 // import DynamicBackground from './components/basicComponents/DynamicBackground';
-import RandomQuotes from './components/basicComponents/RandomQuotes';
+// import RandomQuotes from './components/basicComponents/RandomQuotes';
+import FileUploader from './components/basicComponents/FileUploader';
 
 function App() {
   return (
@@ -25,7 +26,8 @@ function App() {
       {/* <DynamicBackground /> */}
       {/* <Navbar /> */}
       {/* <Routing /> */}
-      <RandomQuotes />
+      {/* <RandomQuotes /> */}
+      <FileUploader />
     </>
   );
 }
