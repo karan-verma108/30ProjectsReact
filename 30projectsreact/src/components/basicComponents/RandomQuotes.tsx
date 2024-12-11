@@ -23,12 +23,17 @@ export default function RandomQuotes(): JSX.Element {
         throw new Error(`HTTP ERROR STATUS ${response.status}`);
       }
       const dataReturned = await response.json();
-      const randomQuoteNumber = Math.round(Math.random() * 30);
+
+      const randomQuoteNumber = Math.round(
+        Math.random() * dataReturned.quotes.length
+      );
       setQuotes(dataReturned.quotes[randomQuoteNumber]);
     } catch (error: unknown) {
       console.log('Sorry we encounted an error', error);
     }
   };
+
+  console.log('quotes', quotes);
 
   useEffect(() => {
     fetchData();
@@ -38,10 +43,10 @@ export default function RandomQuotes(): JSX.Element {
       <div className='w-2/3 mx-auto shadow-lg flex flex-col gap-3 justify-center items-center text-2xl'>
         {quotes.quote}
         <button
-          className='shadow-lg px-3 py-2 bg-blue-700 text-white rounded-md hover:text-blue-700 hover:bg-white'
+          className='shadow-lg px-3 py-2 bg-blue-700 text-white rounded-md hover:text-blue-700 hover:bg-white cursor-pointer'
           onClick={fetchData}
         >
-          More {/* add a loader while data is being fetched  */}
+          {quotes.author.length === 0 ? 'Loading' : 'More'}
         </button>
       </div>
     </div>
