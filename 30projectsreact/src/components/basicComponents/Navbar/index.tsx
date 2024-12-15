@@ -7,11 +7,11 @@ export default function Navbar(): JSX.Element {
         <Link to={'/'}>
           <li>Home</li>
         </Link>
-        <Link to={'/about'}>
-          <li>About</li>
+        <Link to={'/register'}>
+          <li>Register</li>
         </Link>
-        <Link to={'help'}>
-          <li>Help</li>
+        <Link to={'login'}>
+          <li>Login</li>
         </Link>
       </ul>
     </nav>

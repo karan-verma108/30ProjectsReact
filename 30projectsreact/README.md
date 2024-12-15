@@ -48,3 +48,8 @@ export default tseslint.config({
   },
 })
 ```
+<!-- Im going to use session storage you know for the very first time by myself so let's see how it goes -->
+
+<!-- to store an object in the session storage we must first convert it into a JSON string, we can do so using JSON.stringify() -->
+<!-- And when retrieving the same object we would need to parse it, so we can parse it into a javascript object, using the JSON.parse() -->
+
