@@ -71,21 +71,30 @@ export default withFormik({
     email: Yup.string().required('Email is required'),
     password: Yup.string().required('Password is required'),
   }),
-  handleSubmit: (values: LoginFormikValues, { setSubmitting }) => {
+  handleSubmit: (values: LoginFormikValues, { setSubmitting, resetForm }) => {
     const sessionData: string | null = sessionStorage.getItem('userData');
+
     if (sessionData !== null) {
-      const parsedSessionData: RegisterFormikValues = JSON.parse(sessionData);
+      const userData: RegisterFormikValues[] = JSON.parse(sessionData);
+
+      const userEmails: string[] = userData.map(
+        (item: RegisterFormikValues) => item.email
+      );
+      const userPasswords: string[] = userData.map(
+        (item: RegisterFormikValues) => item.password
+      );
 
       if (
-        parsedSessionData.email === values.email &&
-        parsedSessionData.password === values.password
+        userEmails.includes(values.email) &&
+        userPasswords.includes(values.password)
       ) {
-        alert('You are successfully logged in!');
-        setSubmitting(false); // it sets the submitting state to false, indicating that the form submission is complete
+        alert(`You are successfully logged in ${values.email}`);
+        setSubmitting(false); //indicating that the form execution is now complete
       } else {
         alert('Please check your credentials');
       }
     }
+    resetForm();
   },
   displayName: 'Login',
 })(Login);

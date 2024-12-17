@@ -127,13 +127,37 @@ export default withFormik({
     password: Yup.string().required('Password is required'),
     confirmPassword: Yup.string().required('Confirm Password is required'),
   }),
-  handleSubmit: (values: RegisterFormikValues, { setSubmitting }) => {
-    if (!values) {
-      console.log('values', values);
+  handleSubmit: (
+    values: RegisterFormikValues,
+    { setSubmitting, resetForm }
+  ) => {
+    if (values) {
       setSubmitting(false); //it sets the submitting state to false, indicating that the form submission is complete
-      sessionStorage.setItem('userData', JSON.stringify(values));
-      alert('Congrats you are registered!');
+
+      const existingUsers: string | null = sessionStorage.getItem('userData');
+
+      const userData: RegisterFormikValues[] =
+        existingUsers && JSON.parse(existingUsers);
+      const userEmails: string[] = userData.map(
+        (item: RegisterFormikValues) => item.email
+      );
+
+      if (userEmails.includes(values.email)) {
+        alert('Account already exists, please login using your credentions');
+      } else {
+        let users: unknown[] = [];
+        if (existingUsers) {
+          users = JSON.parse(existingUsers);
+        }
+
+        users.push({ ...values });
+
+        sessionStorage.setItem('userData', JSON.stringify(users));
+
+        alert('Congrats you are registered!');
+      }
     }
+    resetForm();
   },
   displayName: 'Register',
 })(Register);
