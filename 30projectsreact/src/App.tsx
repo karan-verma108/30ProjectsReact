@@ -7,10 +7,11 @@
 // import SpecifiedTimeCounter from './components/basicComponents/SpecifiedTimeCounter';
 // import Todo from './components/todo';
 // import Navbar from './components/basicComponents/Navbar';
-import Routing from './routing';
+// import Routing from './routing';
 // import DynamicBackground from './components/basicComponents/DynamicBackground';
 // import RandomQuotes from './components/basicComponents/RandomQuotes';
 // import FileUploader from './components/basicComponents/FileUploader';
+import WeatherApp from './components/weatherApp';
 
 function App() {
   return (
@@ -28,7 +29,8 @@ function App() {
       {/* <Routing /> */}
       {/* <RandomQuotes /> */}
       {/* <FileUploader /> */}
-      <Routing />
+      {/* <Routing /> */}
+      <WeatherApp />
     </>
   );
 }
