@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { MoonIcon, SunIcon } from '@heroicons/react/24/outline';
 
+import { apiKey } from '../../constants';
+
 export default function WeatherApp(): JSX.Element {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [data, setData] = useState<any>({});
@@ -43,7 +45,7 @@ export default function WeatherApp(): JSX.Element {
     const { latitude, longitude }: any = value;
 
     return fetch(
-      `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&`
+      `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}`
     )
       .then((res) => res.json())
       .then((data) => setData(data))
