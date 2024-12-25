@@ -99,11 +99,11 @@ export default function WeatherApp(): JSX.Element {
     >
       {data && data !== undefined && (
         <div
-          className={`border border-black w-1/4 h-3/4 rounded-lg ${
+          className={`xl:w-1/4 w-11/12 h-3/4 rounded-lg ${
             bgColor ?? ''
-          } p-2.5`}
+          } p-2.5 shadow-2xl`}
         >
-          <div className='border border-black flex justify-between h-1/3'>
+          <div className='flex justify-between h-1/3'>
             <div>
               <p
                 className={`${
@@ -133,7 +133,11 @@ export default function WeatherApp(): JSX.Element {
               )}
             </div>
           </div>
-          <div className='border border-black w-full h-1/2 flex flex-col justify-center items-center text-2xl'>
+          <div
+            className={`w-full h-1/2 flex flex-col justify-center items-center rounded-xl ${
+              bgColor === 'bg-violet-800' ? 'bg-black' : 'bg-white'
+            } text-2xl`}
+          >
             <p>Your city is : {data?.name}</p>
             <p>Your country is : {data?.sys?.country}</p>
             <p>
