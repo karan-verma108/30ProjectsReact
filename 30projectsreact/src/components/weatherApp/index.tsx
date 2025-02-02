@@ -51,6 +51,8 @@ export default function WeatherApp(): JSX.Element {
     }
   };
 
+  console.log('current bg', currentBackground);
+
   const getWeatherDetails = () => {
     return new Promise((resolve, reject) => {
       if (navigator.geolocation) {
@@ -156,11 +158,12 @@ export default function WeatherApp(): JSX.Element {
 
   const dropdownMenu: HTMLElement | null =
     document.getElementById('dropdown-menu');
-  const searchInput: null | HTMLInputElement =
-    document.getElementById('search-input');
+  const searchInput: HTMLInputElement | null = document.getElementById(
+    'search-input'
+  ) as HTMLInputElement | null;
 
   searchInput?.addEventListener('input', () => {
-    const searchTerm: string = searchInput?.value?.toLowerCase();
+    const searchTerm: string = searchInput?.value?.toLowerCase() ?? '';
     const items: NodeListOf<HTMLAnchorElement> | undefined =
       dropdownMenu?.querySelectorAll('a');
 
@@ -187,9 +190,12 @@ export default function WeatherApp(): JSX.Element {
 
   useEffect(() => {
     if (!isNaN(tempInCelcius)) {
+      console.log('fn is working');
       handleCurrentBackground();
     }
   }, [tempInCelcius]);
+
+  console.log('color', currentBackground);
 
   return (
     <div
@@ -199,7 +205,7 @@ export default function WeatherApp(): JSX.Element {
     >
       {data && data !== undefined && (
         <div
-          className={`xl:w-1/4 w-full flex flex-col gap-28 h-screen rounded-lg mx-auto bg-${currentBackground} bg-no-repeat bg-cover ${
+          className={`xl:w-1/4 w-full flex flex-col gap-28 h-screen rounded-lg bg-normalDay mx-auto bg-no-repeat bg-cover ${
             bgColor ?? ''
           } p-2.5 shadow-2xl`}
         >
