@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { MoonIcon, SunIcon } from '@heroicons/react/24/outline';
 
 import { apiKey } from '../../constants';
@@ -31,6 +31,8 @@ export default function WeatherApp(): JSX.Element {
     string,
     React.Dispatch<React.SetStateAction<string>>
   ] = useState<string>('');
+
+  const cityDropdownRef = useRef<HTMLDivElement>(null);
 
   const tempFromApi: string = (data?.main?.temp - 273.15).toFixed(2);
   let tempInCelcius: number = Number(tempFromApi);
@@ -171,6 +173,10 @@ export default function WeatherApp(): JSX.Element {
     setIsDropdownMenuOpen(false);
   };
 
+  const handleAdditionCityClick = (additionalCity: string): void => {
+    setCity(additionalCity);
+  };
+
   console.log('city', city);
 
   useEffect(() => {
@@ -190,6 +196,23 @@ export default function WeatherApp(): JSX.Element {
       handleCurrentBackground();
     }
   }, [tempInCelcius]);
+
+  useEffect(() => {
+    const handleOutsideClick = (e: MouseEvent) => {
+      if (
+        cityDropdownRef.current &&
+        !cityDropdownRef.current.contains(e.target as Node)
+      ) {
+        setIsDropdownMenuOpen(false);
+      }
+    };
+
+    document.addEventListener('click', handleOutsideClick);
+
+    return () => {
+      document.removeEventListener('click', handleOutsideClick);
+    };
+  }, [cityDropdownRef, setIsDropdownMenuOpen]);
 
   return (
     <div
@@ -236,7 +259,10 @@ export default function WeatherApp(): JSX.Element {
               )}
             </div>
           </div>
-          <div className='flex items-center justify-center w-full'>
+          <div
+            className='flex items-center justify-center w-full'
+            ref={cityDropdownRef}
+          >
             <div className='relative group w-9/12'>
               <button
                 className='inline-flex justify-center w-full px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-blue-500'
@@ -266,22 +292,35 @@ export default function WeatherApp(): JSX.Element {
                     id='city'
                     name='city'
                     value={city}
+                    autoFocus={isDropdownMenuOpen}
                     className='block w-full px-4 py-2 text-gray-800 border rounded-md  border-gray-300 focus:outline-none'
                     type='text'
                     onChange={handleCityChange}
                     placeholder='Search a city...'
                   />
-                  <p className='block px-4 py-2 text-gray-700 hover:bg-gray-100 active:bg-blue-100 cursor-pointer rounded-md'>
-                    Uppercase
+                  <p
+                    className='block px-4 py-2 text-gray-700 hover:bg-gray-100 active:bg-blue-100 cursor-pointer rounded-md'
+                    onClick={() => handleAdditionCityClick('Mumbai')}
+                  >
+                    Mumbai
                   </p>
-                  <p className='block px-4 py-2 text-gray-700 hover:bg-gray-100 active:bg-blue-100 cursor-pointer rounded-md'>
-                    Lowercase
+                  <p
+                    className='block px-4 py-2 text-gray-700 hover:bg-gray-100 active:bg-blue-100 cursor-pointer rounded-md'
+                    onClick={() => handleAdditionCityClick('Tokyo')}
+                  >
+                    Tokyo
                   </p>
-                  <p className='block px-4 py-2 text-gray-700 hover:bg-gray-100 active:bg-blue-100 cursor-pointer rounded-md'>
-                    Camel Case
+                  <p
+                    className='block px-4 py-2 text-gray-700 hover:bg-gray-100 active:bg-blue-100 cursor-pointer rounded-md'
+                    onClick={() => handleAdditionCityClick('California')}
+                  >
+                    California
                   </p>
-                  <p className='block px-4 py-2 text-gray-700 hover:bg-gray-100 active:bg-blue-100 cursor-pointer rounded-md'>
-                    Kebab Case
+                  <p
+                    className='block px-4 py-2 text-gray-700 hover:bg-gray-100 active:bg-blue-100 cursor-pointer rounded-md'
+                    onClick={() => handleAdditionCityClick('Beijing')}
+                  >
+                    Beijing
                   </p>
                 </form>
               )}
