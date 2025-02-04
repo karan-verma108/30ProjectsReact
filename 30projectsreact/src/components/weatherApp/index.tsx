@@ -12,6 +12,11 @@ export default function WeatherApp(): JSX.Element {
     React.Dispatch<React.SetStateAction<string>>
   ] = useState<string>('');
 
+  const [city, setCity]: [
+    string,
+    React.Dispatch<React.SetStateAction<string>>
+  ] = useState<string>('');
+
   const [isWeatherIconClicked, setIsWeatherIconClicked]: [
     boolean,
     React.Dispatch<React.SetStateAction<boolean>>
@@ -37,21 +42,29 @@ export default function WeatherApp(): JSX.Element {
     const currentHour: number = currentDay.getHours();
 
     if (tempInCelcius > 20 && currentHour < 12) {
-      setCurrentBackground('normalDay');
+      setCurrentBackground(
+        'https://img.freepik.com/premium-photo/italian-vineyard-landscape-with-hous_926199-203543.jpg'
+      );
     } else if (tempInCelcius < 20 && currentHour < 20) {
-      setCurrentBackground('coldDay');
+      setCurrentBackground(
+        'https://ai.flux-image.com/flux/4ad8f4da-597e-4648-9099-5739e47f4919.jpg'
+      );
     } else if (tempInCelcius > 20 && currentHour > 12 && currentHour <= 16) {
-      setCurrentBackground('hotDay');
+      setCurrentBackground(
+        'https://st2.depositphotos.com/4164031/8139/i/450/depositphotos_81398650-stock-photo-green-field-under-the-sun.jpg'
+      );
     } else if (currentHour >= 16 && currentHour <= 18) {
-      setCurrentBackground('evening');
+      setCurrentBackground(
+        'https://i.pinimg.com/474x/03/30/4f/03304f4db69facda5fb01bc837750c1f.jpg'
+      );
     } else if (currentHour >= 18 && currentHour <= 23) {
-      setCurrentBackground('night');
+      setCurrentBackground(
+        'https://storage.ko-fi.com/cdn/useruploads/display/59388fac-810b-4777-808c-bf52ad7ffaa8_xstrangee_a_man_and_a_woman_in_a_convertible_car_on_top_of_a__4c49ccc1-4eab-4e46-8f5b-3e369d0b7f15_3.png'
+      );
     } else {
       setCurrentBackground('');
     }
   };
-
-  console.log('current bg', currentBackground);
 
   const getWeatherDetails = () => {
     return new Promise((resolve, reject) => {
@@ -114,39 +127,22 @@ export default function WeatherApp(): JSX.Element {
     return `${hours}:${minutes}:${seconds} ${meridiem}`;
   };
 
+  const dayObj = {
+    1: 'Monday',
+    2: 'Tuesday',
+    3: 'Wednesday',
+    4: 'Thursday',
+    5: 'Friday',
+    6: 'Saturday',
+    7: 'Sunday',
+  };
+
   const getDayAndTime = () => {
     const date = new Date();
     const todayDate = date.toLocaleDateString();
     const day = date.getDay();
-    let dayResult;
 
-    switch (day) {
-      case 1:
-        dayResult = 'Monday';
-        break;
-
-      case 2:
-        dayResult = 'Tuesday';
-        break;
-      case 3:
-        dayResult = 'Wednesday';
-        break;
-      case 4:
-        dayResult = 'Thursday';
-        break;
-      case 5:
-        dayResult = 'Friday';
-        break;
-      case 6:
-        dayResult = 'Saturday';
-        break;
-      case 7:
-        dayResult = 'Sunday';
-        break;
-
-      default:
-        dayResult = '';
-    }
+    const dayResult = dayObj[day as keyof typeof dayObj];
 
     return { todayDate, dayResult };
   };
@@ -156,26 +152,26 @@ export default function WeatherApp(): JSX.Element {
 
   const bgColor: string | null = localStorage.getItem('bgColor');
 
-  const dropdownMenu: HTMLElement | null =
-    document.getElementById('dropdown-menu');
-  const searchInput: HTMLInputElement | null = document.getElementById(
-    'search-input'
-  ) as HTMLInputElement | null;
+  const handleCityChange = (e: {
+    target: { value: React.SetStateAction<string> };
+  }) => {
+    setCity(e.target.value);
+  };
 
-  searchInput?.addEventListener('input', () => {
-    const searchTerm: string = searchInput?.value?.toLowerCase() ?? '';
-    const items: NodeListOf<HTMLAnchorElement> | undefined =
-      dropdownMenu?.querySelectorAll('a');
+  const handleCitySubmit = (e: { preventDefault: () => void }) => {
+    e.preventDefault();
 
-    items?.forEach((item) => {
-      const text = item?.textContent?.toLowerCase();
-      if (text?.includes(searchTerm)) {
-        item.style.display = 'block';
-      } else {
-        item.style.display = 'none';
-      }
-    });
-  });
+    fetch(
+      `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`
+    )
+      .then((res) => res.json().then((data) => setData(data)))
+      .catch((err) => console.log('err', err));
+
+    setCity('');
+    setIsDropdownMenuOpen(false);
+  };
+
+  console.log('city', city);
 
   useEffect(() => {
     const timeResult: string = getCurrentTime();
@@ -195,8 +191,6 @@ export default function WeatherApp(): JSX.Element {
     }
   }, [tempInCelcius]);
 
-  console.log('color', currentBackground);
-
   return (
     <div
       className={`flex justify-center items-center h-screen ${
@@ -205,9 +199,12 @@ export default function WeatherApp(): JSX.Element {
     >
       {data && data !== undefined && (
         <div
-          className={`xl:w-1/4 w-full flex flex-col gap-28 h-screen rounded-lg bg-normalDay mx-auto bg-no-repeat bg-cover ${
-            bgColor ?? ''
-          } p-2.5 shadow-2xl`}
+          className={`xl:w-1/4 w-full flex flex-col gap-28 h-screen rounded-lg mx-auto p-2.5 shadow-2xl`}
+          style={{
+            backgroundImage: `url(${currentBackground})`,
+            backgroundSize: 'cover',
+            backgroundRepeat: 'no-repeat',
+          }}
         >
           <div className='flex justify-between'>
             <div>
@@ -239,8 +236,8 @@ export default function WeatherApp(): JSX.Element {
               )}
             </div>
           </div>
-          <div className='flex items-center justify-center'>
-            <div className='relative group'>
+          <div className='flex items-center justify-center w-full'>
+            <div className='relative group w-9/12'>
               <button
                 className='inline-flex justify-center w-full px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-blue-500'
                 onClick={() => setIsDropdownMenuOpen(!isDropdownMenuOpen)}
@@ -261,39 +258,32 @@ export default function WeatherApp(): JSX.Element {
                 </svg>
               </button>
               {isDropdownMenuOpen && (
-                <div className='absolute right-0 mt-2 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 p-1 space-y-1'>
+                <form
+                  className='w-full absolute mt-2 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 p-1 space-y-1'
+                  onSubmit={handleCitySubmit}
+                >
                   <input
-                    id='search-input'
+                    id='city'
+                    name='city'
+                    value={city}
                     className='block w-full px-4 py-2 text-gray-800 border rounded-md  border-gray-300 focus:outline-none'
                     type='text'
-                    placeholder='Search items'
-                    autoComplete='off'
+                    onChange={handleCityChange}
+                    placeholder='Search a city...'
                   />
-                  <a
-                    href='#'
-                    className='block px-4 py-2 text-gray-700 hover:bg-gray-100 active:bg-blue-100 cursor-pointer rounded-md'
-                  >
+                  <p className='block px-4 py-2 text-gray-700 hover:bg-gray-100 active:bg-blue-100 cursor-pointer rounded-md'>
                     Uppercase
-                  </a>
-                  <a
-                    href='#'
-                    className='block px-4 py-2 text-gray-700 hover:bg-gray-100 active:bg-blue-100 cursor-pointer rounded-md'
-                  >
+                  </p>
+                  <p className='block px-4 py-2 text-gray-700 hover:bg-gray-100 active:bg-blue-100 cursor-pointer rounded-md'>
                     Lowercase
-                  </a>
-                  <a
-                    href='#'
-                    className='block px-4 py-2 text-gray-700 hover:bg-gray-100 active:bg-blue-100 cursor-pointer rounded-md'
-                  >
+                  </p>
+                  <p className='block px-4 py-2 text-gray-700 hover:bg-gray-100 active:bg-blue-100 cursor-pointer rounded-md'>
                     Camel Case
-                  </a>
-                  <a
-                    href='#'
-                    className='block px-4 py-2 text-gray-700 hover:bg-gray-100 active:bg-blue-100 cursor-pointer rounded-md'
-                  >
+                  </p>
+                  <p className='block px-4 py-2 text-gray-700 hover:bg-gray-100 active:bg-blue-100 cursor-pointer rounded-md'>
                     Kebab Case
-                  </a>
-                </div>
+                  </p>
+                </form>
               )}
             </div>
           </div>
