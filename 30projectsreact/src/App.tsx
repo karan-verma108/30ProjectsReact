@@ -11,7 +11,8 @@
 // import DynamicBackground from './components/basicComponents/DynamicBackground';
 // import RandomQuotes from './components/basicComponents/RandomQuotes';
 // import FileUploader from './components/basicComponents/FileUploader';
-import WeatherApp from './components/weatherApp';
+// import WeatherApp from './components/weatherApp';
+import Sidebar from './components/basicComponents/Searchbar';
 
 function App() {
   return (
@@ -30,7 +31,8 @@ function App() {
       {/* <RandomQuotes /> */}
       {/* <FileUploader /> */}
       {/* <Routing /> */}
-      <WeatherApp />
+      {/* <WeatherApp /> */}
+      <Sidebar />
     </>
   );
 }
