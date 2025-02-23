@@ -12,7 +12,8 @@
 // import RandomQuotes from './components/basicComponents/RandomQuotes';
 // import FileUploader from './components/basicComponents/FileUploader';
 // import WeatherApp from './components/weatherApp';
-import Sidebar from './components/basicComponents/Searchbar';
+// import Sidebar from './components/basicComponents/Searchbar';
+import Pagination from './components/basicComponents/Pagination';
 
 function App() {
   return (
@@ -32,7 +33,8 @@ function App() {
       {/* <FileUploader /> */}
       {/* <Routing /> */}
       {/* <WeatherApp /> */}
-      <Sidebar />
+      {/* <Sidebar /> */}
+      <Pagination />
     </>
   );
 }
