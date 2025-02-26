@@ -42,8 +42,6 @@ export default function Todo(): JSX.Element {
     setTodoList(filteredTodo);
   };
 
-  console.log('todos arr', todoList);
-
   return (
     <div className='w-full h-screen bg-yellow-200 flex flex-col gap-7 justify-center items-center'>
       <h1 className='text-4xl text-blue-600'>Add Todooooos</h1>

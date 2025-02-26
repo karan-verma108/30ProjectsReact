@@ -177,8 +177,6 @@ export default function WeatherApp(): JSX.Element {
     setCity(additionalCity);
   };
 
-  console.log('city', city);
-
   useEffect(() => {
     const timeResult: string = getCurrentTime();
     setTime(timeResult);
@@ -192,7 +190,6 @@ export default function WeatherApp(): JSX.Element {
 
   useEffect(() => {
     if (!isNaN(tempInCelcius)) {
-      console.log('fn is working');
       handleCurrentBackground();
     }
   }, [tempInCelcius]);
