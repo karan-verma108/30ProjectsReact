@@ -13,7 +13,9 @@
 // import FileUploader from './components/basicComponents/FileUploader';
 // import WeatherApp from './components/weatherApp';
 // import Sidebar from './components/basicComponents/Searchbar';
-import Pagination from './components/basicComponents/Pagination';
+// import Pagination from './components/basicComponents/Pagination';
+
+import ColorPicker from './components/basicComponents/ColorPicker';
 
 function App() {
   return (
@@ -34,7 +36,8 @@ function App() {
       {/* <Routing /> */}
       {/* <WeatherApp /> */}
       {/* <Sidebar /> */}
-      <Pagination />
+      {/* <Pagination /> */}
+      <ColorPicker />
     </>
   );
 }
