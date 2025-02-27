@@ -14,8 +14,9 @@
 // import WeatherApp from './components/weatherApp';
 // import Sidebar from './components/basicComponents/Searchbar';
 // import Pagination from './components/basicComponents/Pagination';
+import HamburgerNavbar from './components/basicComponents/HamburgerNavbar';
 
-import ColorPicker from './components/basicComponents/ColorPicker';
+// import ColorPicker from './components/basicComponents/ColorPicker';
 
 function App() {
   return (
@@ -37,7 +38,8 @@ function App() {
       {/* <WeatherApp /> */}
       {/* <Sidebar /> */}
       {/* <Pagination /> */}
-      <ColorPicker />
+      {/* <ColorPicker /> */}
+      <HamburgerNavbar />
     </>
   );
 }
