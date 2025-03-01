@@ -1,14 +1,15 @@
-import React, { useState } from 'react';
-
-export default function ColorPicker(): JSX.Element {
-  const [color, setColor]: [
-    string,
-    React.Dispatch<React.SetStateAction<string>>
-  ] = useState<string>('');
-
+export default function ColorPicker({
+  label,
+  color,
+  setColor,
+}: {
+  label?: string;
+  color: string;
+  setColor: React.Dispatch<React.SetStateAction<string>>;
+}): JSX.Element {
   return (
     <div style={{ backgroundColor: color }} className='h-screen'>
-      <h1 className='text-7xl text-center'>Color Picker</h1>
+      <h1 className='text-7xl text-center'>{label ?? 'Color Picker'}</h1>
       <input
         type='color'
         id='color'

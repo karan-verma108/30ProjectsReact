@@ -14,7 +14,10 @@
 // import WeatherApp from './components/weatherApp';
 // import Sidebar from './components/basicComponents/Searchbar';
 // import Pagination from './components/basicComponents/Pagination';
-import HamburgerNavbar from './components/basicComponents/HamburgerNavbar';
+// import HamburgerNavbar from './components/basicComponents/HamburgerNavbar';
+import Routing from './components/ThemeChanger/routing';
+
+// import ThemeChanger from './components/ThemeChanger';
 
 // import ColorPicker from './components/basicComponents/ColorPicker';
 
@@ -39,7 +42,8 @@ function App() {
       {/* <Sidebar /> */}
       {/* <Pagination /> */}
       {/* <ColorPicker /> */}
-      <HamburgerNavbar />
+      {/* <HamburgerNavbar /> */}
+      <Routing />
     </>
   );
 }
