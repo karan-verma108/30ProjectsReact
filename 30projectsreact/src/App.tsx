@@ -15,11 +15,10 @@
 // import Sidebar from './components/basicComponents/Searchbar';
 // import Pagination from './components/basicComponents/Pagination';
 // import HamburgerNavbar from './components/basicComponents/HamburgerNavbar';
-import Routing from './components/ThemeChanger/routing';
-
+// import Routing from './components/ThemeChanger/routing';
 // import ThemeChanger from './components/ThemeChanger';
-
 // import ColorPicker from './components/basicComponents/ColorPicker';
+import CrudTodo from './components/crudTodo';
 
 function App() {
   return (
@@ -43,7 +42,8 @@ function App() {
       {/* <Pagination /> */}
       {/* <ColorPicker /> */}
       {/* <HamburgerNavbar /> */}
-      <Routing />
+      {/* <Routing /> */}
+      <CrudTodo />
     </>
   );
 }
