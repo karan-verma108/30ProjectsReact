@@ -11,20 +11,15 @@ export default function CrudTodo(): JSX.Element {
     React.Dispatch<React.SetStateAction<string[]>>
   ] = useState<string[]>([]);
 
-  //   const [isEditing, setIsEditing]: [
-  //     boolean,
-  //     React.Dispatch<React.SetStateAction<boolean>>
-  //   ] = useState<boolean>(false);
-
   const [updatedTodoValue, setUpdatedTodoValue]: [
     string,
     React.Dispatch<React.SetStateAction<string>>
   ] = useState<string>('');
 
   const [clickedItemId, setClickedItemId]: [
-    number,
-    React.Dispatch<React.SetStateAction<number>>
-  ] = useState<number>();
+    number | undefined,
+    React.Dispatch<React.SetStateAction<number | undefined>>
+  ] = useState<number | undefined>();
 
   const handleTodoValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTodoValue(e.target.value);
@@ -48,14 +43,13 @@ export default function CrudTodo(): JSX.Element {
     setTodoItems(itemsAfterDeletion);
   };
 
-  const handleTodoEdit = (updateTodoId: number) => {
-    setClickedItemId(updateTodoId);
-
-    todoItems[updateTodoId] = updatedTodoValue;
-
-    console.log('todoitems[index]', todoItems[updateTodoId]);
+  const onSaveClick = (saveItemId: number) => {
+    const savedItems = todoItems;
+    savedItems.splice(saveItemId, 1, updatedTodoValue);
+    setTodoItems(savedItems);
+    setClickedItemId(-1);
+    setUpdatedTodoValue('');
   };
-
   return (
     <div className='bg-slate-600 text-white h-screen py-2 flex flex-col gap-5 justify-center items-center'>
       <h1 className='text-center text-5xl'>Your Todooos</h1>
@@ -83,30 +77,44 @@ export default function CrudTodo(): JSX.Element {
         todoItems.map((todoItem: string, index: number) => (
           <div
             key={`${todoItem}-${index}`}
-            className='flex gap-2 bg-slate-300 text-black rounded-md p-1'
+            className={`flex gap-2 bg-slate-300 text-black rounded-md p-1 ${
+              clickedItemId === index ? 'scale-125' : ''
+            }`}
           >
             <input
               type='text'
-              value={todoItem}
+              value={clickedItemId === index ? updatedTodoValue : todoItem}
               disabled={clickedItemId !== index}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setUpdatedTodoValue(e.target.value)
-              }
+              placeholder={clickedItemId === index ? todoItem : ''}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                return (
+                  clickedItemId === index && setUpdatedTodoValue(e.target.value)
+                );
+              }}
             />
-            <button
-              className={`${
-                clickedItemId === index ? 'bg-green-500' : 'bg-orange-500'
-              } text-white rounded-lg p-2 cursor-pointer`}
-              onClick={() => handleTodoEdit(index)}
-            >
-              {clickedItemId === index ? 'save' : 'edit'}
-            </button>
-            <button
-              className='bg-red-500 text-white rounded-lg p-2 cursor-pointer'
-              onClick={() => handleDeleteTodo(index)}
-            >
-              delete
-            </button>
+            {clickedItemId === index ? (
+              <button
+                onClick={() => onSaveClick(index)}
+                className='text-white bg-green-600 rounded-lg p-2 cursor-pointer'
+              >
+                save
+              </button>
+            ) : (
+              <div className='flex gap-2'>
+                <button
+                  onClick={() => setClickedItemId(index)}
+                  className='text-white rounded-lg p-2 cursor-pointer bg-orange-500'
+                >
+                  edit
+                </button>
+                <button
+                  className='bg-red-500 text-white rounded-lg p-2 cursor-pointer'
+                  onClick={() => handleDeleteTodo(index)}
+                >
+                  delete
+                </button>
+              </div>
+            )}
           </div>
         ))}
     </div>
