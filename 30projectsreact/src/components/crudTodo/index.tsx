@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import TodoItem from './TodoItem';
 
 export default function CrudTodo(): JSX.Element {
   const [todoValue, setTodoValue]: [
@@ -75,47 +76,17 @@ export default function CrudTodo(): JSX.Element {
       </form>
       {todoItems.length > 0 &&
         todoItems.map((todoItem: string, index: number) => (
-          <div
+          <TodoItem
             key={`${todoItem}-${index}`}
-            className={`flex gap-2 bg-slate-300 text-black rounded-md p-1 ${
-              clickedItemId === index ? 'scale-125' : ''
-            }`}
-          >
-            <input
-              type='text'
-              value={clickedItemId === index ? updatedTodoValue : todoItem}
-              disabled={clickedItemId !== index}
-              placeholder={clickedItemId === index ? todoItem : ''}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                return (
-                  clickedItemId === index && setUpdatedTodoValue(e.target.value)
-                );
-              }}
-            />
-            {clickedItemId === index ? (
-              <button
-                onClick={() => onSaveClick(index)}
-                className='text-white bg-green-600 rounded-lg p-2 cursor-pointer'
-              >
-                save
-              </button>
-            ) : (
-              <div className='flex gap-2'>
-                <button
-                  onClick={() => setClickedItemId(index)}
-                  className='text-white rounded-lg p-2 cursor-pointer bg-orange-500'
-                >
-                  edit
-                </button>
-                <button
-                  className='bg-red-500 text-white rounded-lg p-2 cursor-pointer'
-                  onClick={() => handleDeleteTodo(index)}
-                >
-                  delete
-                </button>
-              </div>
-            )}
-          </div>
+            index={index}
+            item={todoItem}
+            clickedItemId={clickedItemId}
+            updatedTodoValue={updatedTodoValue}
+            setUpdatedTodoValue={setUpdatedTodoValue}
+            onSaveClick={() => onSaveClick(index)}
+            setClickedItemId={setClickedItemId}
+            handleDeleteTodo={() => handleDeleteTodo(index)}
+          />
         ))}
     </div>
   );
