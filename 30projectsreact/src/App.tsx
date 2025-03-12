@@ -19,7 +19,8 @@
 // import ThemeChanger from './components/ThemeChanger';
 // import ColorPicker from './components/basicComponents/ColorPicker';
 // import CrudTodo from './components/crudTodo';
-import CounterWithReducer from './components/basicComponents/CounterWithReducer';
+import TodoWithReducer from './components/basicComponents/TodoWithReducer';
+// import CounterWithReducer from './components/basicComponents/CounterWithReducer';
 
 function App() {
   return (
@@ -45,7 +46,8 @@ function App() {
       {/* <HamburgerNavbar /> */}
       {/* <Routing /> */}
       {/* <CrudTodo /> */}
-      <CounterWithReducer />
+      {/* <CounterWithReducer /> */}
+      <TodoWithReducer />
     </>
   );
 }
