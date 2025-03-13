@@ -8,20 +8,25 @@ export default function TodoWithReducer(): JSX.Element {
   };
 
   const todoReducer = (state: any, action: TodoAction) => {
-    // console.log('action', action);
-
-    // console.log('state.todoItems', state.todoItems);
-    // console.log('action.payload', action.payload);
-
     switch (action.type) {
       case 'ADD':
-        return {
-          ...state,
-          todoItems: [...state.todoItems, action.payload],
-          todoItem: '',
-        };
+        return state.todoItem.length > 0
+          ? {
+              ...state,
+              todoItems: [...state.todoItems, action.payload],
+              todoItem: '',
+            }
+          : { ...state };
       case 'UPDATE_TODO_ITEM':
         return { ...state, todoItem: action.payload };
+
+      case 'DELETE':
+        return {
+          ...state,
+          todoItems: state.todoItems.filter(
+            (_, index: number) => index !== action.payload
+          ),
+        };
 
       default:
         break;
@@ -40,7 +45,7 @@ export default function TodoWithReducer(): JSX.Element {
   return (
     <div className='flex flex-col gap-5 justify-center items-center h-screen'>
       <h1>Todo with useReducer</h1>
-      <div className='flex gap-3'>
+      <div className='flex flex-col gap-3'>
         <form
           onSubmit={(e) => {
             e.preventDefault();
@@ -61,6 +66,23 @@ export default function TodoWithReducer(): JSX.Element {
             Go
           </button>
         </form>
+        <div className='flex flex-col gap-4'>
+          {state?.todoItems?.length > 0 &&
+            state?.todoItems?.map?.((item: string, index: number) => (
+              <div
+                key={`${item}-${index}`}
+                className='flex justify-between items-center bg-amber-100'
+              >
+                <p>{item}</p>
+                <button
+                  onClick={() => dispatch({ type: 'DELETE', payload: index })}
+                  className='bg-red-600 text-white rounded-sm py-1 px-2 cursor-pointer'
+                >
+                  Delete
+                </button>
+              </div>
+            ))}
+        </div>
       </div>
     </div>
   );

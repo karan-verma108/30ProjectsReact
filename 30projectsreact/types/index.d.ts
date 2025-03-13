@@ -12,4 +12,5 @@ export interface InitialStateType {
 
 export type TodoAction =
   | { type: 'ADD'; payload: string }
-  | { type: 'UPDATE_TODO_ITEM'; payload: string };
+  | { type: 'UPDATE_TODO_ITEM'; payload: string }
+  | { type: 'DELETE'; payload: number };
