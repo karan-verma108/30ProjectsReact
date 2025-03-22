@@ -9,7 +9,10 @@ export default function TodoWithReducer(): JSX.Element {
     editedTodoValue: '',
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const todoReducer = (state: any, action: TodoAction) => {
+    console.log('action', action);
+
     switch (action.type) {
       case 'ADD':
         return state.todoItem.length > 0
@@ -27,7 +30,7 @@ export default function TodoWithReducer(): JSX.Element {
         return {
           ...state,
           todoItems: state.todoItems.filter(
-            (_, index: number) => index !== action.payload
+            (_: string, index: number) => index !== action.payload
           ),
         };
 
@@ -37,15 +40,16 @@ export default function TodoWithReducer(): JSX.Element {
       case 'HANDLE_EDITED_TODO_ITEM':
         return { ...state, editedTodoValue: action.payload };
 
-      // case 'SAVE':
-      //   return {
-      //     ...state,
-      //     todoItems: [
-      //       ...state.todoItems,
-      //       state.todoItems.splice(action.payload, 1, state.editedTodoValue),
-      //     ],
-      //     editTodoId: null,
-      //   };
+      case 'SAVE': {
+        const updatedTodoItems: string[] = [...state.todoItems];
+        updatedTodoItems.splice(action.payload, 1, state.editedTodoValue);
+        return {
+          ...state,
+          todoItems: updatedTodoItems,
+          editTodoId: null,
+          editedTodoValue: '',
+        };
+      }
 
       default:
         break;
